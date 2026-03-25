@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="view.css">
+</head>
+<body>
+    
+    <h2>All Tasks</h2>
+
+    <input type="text" id="search" placeholder="Search Task">
+
+    <table border="1">
+
+        <thead>
+
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Priority</th>
+                <th>Status</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="tableData"></tbody>
+
+    </table>
+
+    <script>
+
+        let tasks=JSON.parse(localStorage.getItem("tasks"))||[]
+
+        let table=document.getElementById("tableData")
+
+        function display(data)
+        {
+
+            table.innerHTML=""
+
+            data.forEach(task=>{
+
+            table.innerHTML+=`
+
+            <tr>
+            <td>${task.title}</td>
+            <td>${task.desc}</td>
+            <td>${task.date}</td>
+            <td>${task.priority}</td>
+            <td>${task.status}</td>
+            </tr> `
+
+            })
+
+        }
+
+            display(tasks)
+
+            document.getElementById("search").addEventListener("input",function(){
+
+            let value=this.value.toLowerCase()
+
+            let filtered=tasks.filter(t=>t.title.toLowerCase().includes(value))
+
+            display(filtered)
+
+        })
+
+    </script>
+
+</body>
+</html>
